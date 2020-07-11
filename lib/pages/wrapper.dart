@@ -1,5 +1,7 @@
 import 'package:firebase_app/models/user.dart';
 import 'package:firebase_app/pages/auth/authenticate.dart';
+import 'package:firebase_app/pages/home/home_demande.dart';
+import 'package:firebase_app/pages/home/home_offre.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_app/pages/home/home.dart';

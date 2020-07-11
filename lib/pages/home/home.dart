@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/brew.dart';
 import 'package:firebase_app/pages/home/brew_list.dart';
+import 'package:firebase_app/pages/home/home_demande.dart';
+import 'package:firebase_app/pages/home/home_offre.dart';
 import 'package:firebase_app/pages/home/settings_form.dart';
 import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -23,31 +25,52 @@ class Home extends StatelessWidget {
           });
     }
 
-    return StreamProvider<List<Brew>>.value(
-      value: DatabaseService().brews,
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.brown[50],
-        appBar: AppBar(
-          title: Text('Home'),
-          backgroundColor: Colors.brown[400],
-          elevation: 0.0,
-          actions: [
-            FlatButton.icon(
-              icon: Icon(Icons.person),
-              label: Text('logout'),
-              onPressed: () async {
-                await _authService.signOut();
-              },
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.brown[50],
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
+        actions: [
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('logout'),
+            onPressed: () async {
+              await _authService.signOut();
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          RaisedButton(
+            color: Colors.pink[400],
+            child: Text(
+              'Offres',
+              style: TextStyle(color: Colors.white),
             ),
-            FlatButton.icon(
-              icon: Icon(Icons.settings),
-              label: Text('settings'),
-              onPressed: () => _showSettingsPanel(),
-            )
-          ],
-        ),
-        body: BrewsList(),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeOffre()),
+              );
+            },
+          ),
+          RaisedButton(
+            color: Colors.pink[400],
+            child: Text(
+              'Demandes',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeDemande()),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
