@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/demande.dart';
+import 'package:firebase_app/pages/home/add_demande.dart';
 import 'package:firebase_app/pages/home/demande_details.dart';
 import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,14 @@ class HomeDemande extends StatelessWidget {
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddDemande(),
+            ),
+          );
+        },
       ),
     );
   }

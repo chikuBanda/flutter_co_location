@@ -1,13 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app/models/brew.dart';
-import 'package:firebase_app/pages/home/brew_list.dart';
 import 'package:firebase_app/pages/home/home_demande.dart';
 import 'package:firebase_app/pages/home/home_offre.dart';
+import 'package:firebase_app/pages/home/map.dart';
 import 'package:firebase_app/pages/home/settings_form.dart';
 import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_app/services/database.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   final AuthService _authService = new AuthService();
@@ -44,6 +40,7 @@ class Home extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Carte(),
           RaisedButton(
             color: Colors.pink[400],
             child: Text(

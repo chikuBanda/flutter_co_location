@@ -32,6 +32,8 @@ dependencies:
   cloud_firestore: ^0.13.7
   provider: ^4.3.1
   flutter_spinkit: "^4.1.2"
+  flutter_map: ^0.10.1
+  latlng: any
 
 dev_dependencies:
   flutter_test:
