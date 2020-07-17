@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/demande.dart';
 import 'package:firebase_app/pages/home/add_demande.dart';
+import 'package:firebase_app/pages/home/custom_list_item_demande.dart';
 import 'package:firebase_app/pages/home/demande_details.dart';
 import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -55,21 +56,20 @@ class HomeDemande extends StatelessWidget {
       //key: ValueKey(record.name),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: ListTile(
-          title: Text('${record.budget_max}'),
-          trailing: Text('${record.budget_max}'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailDemande(demande: record),
-              ),
-            );
-          },
+        child: CustomListItemDemande(
+          thumbnail: Container(
+            width: 400,
+            height: 400,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: NetworkImage('https://picsum.photos/250?image=9'),
+                  fit: BoxFit.fill),
+            ),
+          ),
+          commentaire: record.commentaire,
+          budget_max: record.budget_max,
+          numero_tel: record.numero_tel,
         ),
       ),
     );

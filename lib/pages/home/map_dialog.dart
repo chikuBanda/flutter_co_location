@@ -1,12 +1,38 @@
+import 'package:firebase_app/models/cordinate.dart';
+import 'package:firebase_app/pages/home/map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 //import 'package:latlng/latlng.dart';
 import 'package:latlong/latlong.dart';
 
-class Carte extends StatelessWidget {
+class MapDialog extends StatefulWidget {
+  @override
+  _MapDialogState createState() => _MapDialogState();
+}
+
+class _MapDialogState extends State<MapDialog> {
+  Cordinate cord = new Cordinate();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
+      appBar: new AppBar(
+        title: const Text('Adresse'),
+        actions: [
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop(new Cordinate(lat: 0.5, lng: 0.6));
+            },
+            child: new Text(
+              'SAVE',
+              style: Theme.of(context)
+                  .textTheme
+                  .subhead
+                  .copyWith(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
       body: new FlutterMap(
         options: new MapOptions(
           center: new LatLng(32.343504, -6.3609538),

@@ -44,8 +44,7 @@ class DatabaseService {
   List<Demande> _demandeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Demande(
-        cordx: doc.data['cordx'] ?? 0.0,
-        cordy: doc.data['cordy'] ?? 0.0,
+        numero_tel: doc.data['cordy'] ?? 0.0,
         budget_max: doc.data['budget_max'] ?? 0.0,
         commentaire: doc.data['commentaire'] ?? '',
       );

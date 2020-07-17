@@ -17,8 +17,7 @@ class _AddDemandeState extends State<AddDemande> {
   bool loading = false;
 
   // textfield state
-  double cordx;
-  double cordy;
+  int numero_tel;
   double budget_max;
   String commentaire = '';
   String error = '';
@@ -45,26 +44,6 @@ class _AddDemandeState extends State<AddDemande> {
                     SizedBox(height: 20.0),
                     TextFormField(
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'cordx'),
-                      onChanged: (val) {
-                        setState(() => cordx = double.parse(val));
-                      },
-                      //validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                    ),
-                    SizedBox(height: 20.0),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'cordy'),
-                      onChanged: (val) {
-                        setState(() => cordy = double.parse(val));
-                      },
-                      /*validator: (val) => val.length < 6
-                          ? 'Enter a password 6+ characters'
-                          : null,*/
-                    ),
-                    SizedBox(height: 20.0),
-                    TextFormField(
-                      decoration:
                           textInputDecoration.copyWith(hintText: 'budget max'),
                       onChanged: (val) {
                         setState(() => budget_max = double.parse(val));
@@ -83,6 +62,15 @@ class _AddDemandeState extends State<AddDemande> {
                       /*validator: (val) => val.length < 6
                           ? 'Enter a password 6+ characters'
                           : null,*/
+                    ),
+                    SizedBox(height: 20.0),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Numero de tel'),
+                      onChanged: (val) {
+                        setState(() => numero_tel = int.parse(val));
+                      },
+                      //validator: (val) => val.isEmpty ? 'Enter an email' : null,
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(
@@ -104,8 +92,7 @@ class _AddDemandeState extends State<AddDemande> {
                         //   }
                         // }
                         demandeCollection.document().setData({
-                          'cordx': cordx,
-                          'cordy': cordy,
+                          'numero_tel': numero_tel,
                           'budget_max': budget_max,
                           'commentaire': commentaire
                         });
