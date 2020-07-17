@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/offre.dart';
+import 'package:firebase_app/pages/home/add_offre.dart';
 import 'package:firebase_app/pages/home/offre_details.dart';
 import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_app/pages/home/offre_description.dart';
+import 'package:firebase_app/pages/home/custom_list_item.dart';
 
 class HomeOffre extends StatelessWidget {
   final AuthService _authService = new AuthService();
@@ -14,24 +17,17 @@ class HomeOffre extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.brown[50],
-      appBar: AppBar(
-        title: Text('Les Offres'),
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-        actions: [
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _authService.signOut();
-            },
-          ),
-        ],
-      ),
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddOffre(),
+            ),
+          );
+        },
       ),
     );
   }
@@ -61,21 +57,15 @@ class HomeOffre extends StatelessWidget {
       //key: ValueKey(record.name),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: ListTile(
-          title: Text('${record.prix}'),
-          trailing: Text('${record.prix}'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailOffre(offre: record),
-              ),
-            );
-          },
+        child: CustomListItem(
+          thumbnail: Image.network(
+            'https://picsum.photos/250?image=9',
+          ),
+          adresse: record.adresse,
+          capacite: record.capacite,
+          superficie: record.superficie,
+          prix: record.prix,
+          offre: record,
         ),
       ),
     );

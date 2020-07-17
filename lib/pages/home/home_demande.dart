@@ -15,20 +15,6 @@ class HomeDemande extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.brown[50],
-      appBar: AppBar(
-        title: Text('Demandes'),
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-        actions: [
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
-            onPressed: () async {
-              await _authService.signOut();
-            },
-          ),
-        ],
-      ),
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
