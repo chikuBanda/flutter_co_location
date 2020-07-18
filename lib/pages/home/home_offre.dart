@@ -3,6 +3,7 @@ import 'package:firebase_app/models/offre.dart';
 import 'package:firebase_app/pages/home/add_offre.dart';
 import 'package:firebase_app/pages/home/offre_details.dart';
 import 'package:firebase_app/services/auth.dart';
+import 'package:firebase_app/services/offres_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_app/pages/home/offre_description.dart';
 import 'package:firebase_app/pages/home/custom_list_item.dart';
@@ -11,6 +12,7 @@ class HomeOffre extends StatelessWidget {
   final AuthService _authService = new AuthService();
   final CollectionReference offreCollection =
       Firestore.instance.collection('offres');
+  OffreService offreService = new OffreService();
 
   @override
   Widget build(BuildContext context) {
@@ -33,25 +35,26 @@ class HomeOffre extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('offres').snapshots(),
-      builder: (context, snapshot) {
+    return FutureBuilder(
+      future: offreService.getEvents(),
+      builder: (context, AsyncSnapshot<List<Offre>> snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
-        return _buildList(context, snapshot.data.documents);
+        List<Offre> offres = snapshot.data;
+        return _buildList(context, snapshot.data);
       },
     );
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  Widget _buildList(BuildContext context, List<Offre> offres) {
     return ListView(
       padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+      children: offres.map((offre) => _buildListItem(context, offre)).toList(),
     );
   }
 
-  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final record = Offre.fromSnapshot(data);
+  Widget _buildListItem(BuildContext context, Offre offre) {
+    final record = offre;
 
     return Padding(
       //key: ValueKey(record.name),

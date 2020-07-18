@@ -30,6 +30,7 @@ class OffreDescription extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: 13,
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
@@ -38,7 +39,7 @@ class OffreDescription extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 9.0,
                   color: Colors.black54,
                 ),
               ),

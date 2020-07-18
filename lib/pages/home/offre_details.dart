@@ -49,7 +49,7 @@ class DetailOffre extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(width: 20.0),
+                      SizedBox(width: 5.0),
                       Column(
                         children: [
                           Text('Capacite'),
@@ -63,7 +63,7 @@ class DetailOffre extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(width: 20.0),
+                      SizedBox(width: 5.0),
                       Column(
                         children: [
                           Text('Superficie'),
@@ -89,39 +89,49 @@ class DetailOffre extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.wifi,
-                        color: Colors.lightBlue,
-                      ),
-                      SizedBox(width: 5.0),
-                      Text('Wifi')
-                    ],
-                  ),
-                  SizedBox(height: 15.0),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.add_a_photo,
-                        color: Colors.lightBlue,
-                      ),
-                      SizedBox(width: 5.0),
-                      Text('Lavage ligne')
-                    ],
-                  ),
-                  SizedBox(height: 15.0),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.add_location,
-                        color: Colors.lightBlue,
-                      ),
-                      SizedBox(width: 5.0),
-                      Text('Climatisation')
-                    ],
-                  ),
-                  SizedBox(height: 30.0),
+                  offre.wifi == 1
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.wifi,
+                              color: Colors.lightBlue,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text('Wifi')
+                          ],
+                        )
+                      : SizedBox(height: 0.0),
+                  offre.wifi == 1
+                      ? SizedBox(height: 15.0)
+                      : SizedBox(height: 0.0),
+                  offre.lavage_ligne == 1
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.add_a_photo,
+                              color: Colors.lightBlue,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text('Lavage ligne')
+                          ],
+                        )
+                      : SizedBox(height: 0.0),
+                  offre.lavage_ligne == 1
+                      ? SizedBox(height: 15.0)
+                      : SizedBox(height: 0.0),
+                  offre.climatisation == 1
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.add_location,
+                              color: Colors.lightBlue,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text('Climatisation')
+                          ],
+                        )
+                      : SizedBox(height: 0.0),
+                  SizedBox(height: 25.0),
                   RaisedButton.icon(
                     label: Text('Appeler'),
                     icon: Icon(Icons.call),
