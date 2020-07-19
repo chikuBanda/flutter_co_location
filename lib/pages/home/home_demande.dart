@@ -4,12 +4,14 @@ import 'package:firebase_app/pages/home/add_demande.dart';
 import 'package:firebase_app/pages/home/custom_list_item_demande.dart';
 import 'package:firebase_app/pages/home/demande_details.dart';
 import 'package:firebase_app/services/auth.dart';
+import 'package:firebase_app/services/demandes_services.dart';
 import 'package:flutter/material.dart';
 
 class HomeDemande extends StatelessWidget {
   final AuthService _authService = new AuthService();
   final CollectionReference demandeCollection =
       Firestore.instance.collection('demandes');
+  final DemandeService demandeService = new DemandeService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +34,26 @@ class HomeDemande extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('demandes').snapshots(),
-      builder: (context, snapshot) {
+    return FutureBuilder(
+      future: demandeService.getDemandes(),
+      builder: (context, AsyncSnapshot<List<Demande>> snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
-        return _buildList(context, snapshot.data.documents);
+        return _buildList(context, snapshot.data);
       },
     );
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  Widget _buildList(BuildContext context, List<Demande> demandes) {
     return ListView(
       padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+      children:
+          demandes.map((demande) => _buildListItem(context, demande)).toList(),
     );
   }
 
-  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final record = Demande.fromSnapshot(data);
+  Widget _buildListItem(BuildContext context, Demande demande) {
+    final record = demande;
 
     return Padding(
       //key: ValueKey(record.name),

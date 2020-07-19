@@ -9,7 +9,7 @@ class AuthenticationService {
 
   _getToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    token = jsonDecode(localStorage.getString('token'))['token'];
+    token = jsonDecode(localStorage.getString('token'));
   }
 
   authData(data, apiUrl) async {

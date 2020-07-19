@@ -2,11 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Demande {
   int numero_tel;
+  int user_id;
   double budget_max;
   String commentaire;
   final DocumentReference reference;
 
-  Demande({numero_tel, this.budget_max, this.commentaire, this.reference});
+  Demande(
+      {numero_tel,
+      this.budget_max,
+      this.commentaire,
+      this.reference,
+      this.user_id});
 
   Demande.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['numero_tel'] != null),
@@ -18,4 +24,13 @@ class Demande {
 
   Demande.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
+
+  factory Demande.fromJson(Map<String, dynamic> json) {
+    return Demande(
+      budget_max: json['budget_max'].toDouble(),
+      commentaire: json['commentaire'] as String,
+      numero_tel: json['numero_tel'] as int,
+      user_id: json['user_id'] as int,
+    );
+  }
 }

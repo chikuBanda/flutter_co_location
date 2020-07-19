@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_app/pages/auth/sign_in.dart';
 import 'package:firebase_app/pages/home/home_demande.dart';
 import 'package:firebase_app/pages/home/home_offre.dart';
@@ -22,18 +24,27 @@ class _HomeState extends State<Home> {
   int _selectedItem = 0;
   String username = '';
 
+  @override
+  void initState() {
+    _loadUserData();
+    super.initState();
+  }
+
+  _loadUserData() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var user = jsonDecode(localStorage.getString('user'));
+
+    if (user != null) {
+      setState(() {
+        username = user;
+      });
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
     });
-  }
-
-  @override
-  void initState() async {
-    var localstorage = await SharedPreferences.getInstance();
-    var user = localstorage.get('user');
-    print("user: ${localstorage.get('user')}");
-    super.initState();
   }
 
   Widget pageWidgets(int index) {
@@ -57,7 +68,7 @@ class _HomeState extends State<Home> {
         actions: [
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('logout'),
+            label: Text('$username'),
             onPressed: () async {
               _logout();
               //await _authService.signOut();
