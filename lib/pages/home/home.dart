@@ -1,3 +1,4 @@
+import 'package:firebase_app/pages/auth/sign_in.dart';
 import 'package:firebase_app/pages/home/home_demande.dart';
 import 'package:firebase_app/pages/home/home_offre.dart';
 import 'package:firebase_app/pages/home/map.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoder/geocoder.dart';
 import "package:latlong/latlong.dart";
 import 'package:latlong/latlong.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,11 +20,20 @@ class _HomeState extends State<Home> {
   final AuthService _authService = new AuthService();
 
   int _selectedItem = 0;
+  String username = '';
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
     });
+  }
+
+  @override
+  void initState() async {
+    var localstorage = await SharedPreferences.getInstance();
+    var user = localstorage.get('user');
+    print("user: ${localstorage.get('user')}");
+    super.initState();
   }
 
   Widget pageWidgets(int index) {
@@ -48,7 +59,8 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.person),
             label: Text('logout'),
             onPressed: () async {
-              await _authService.signOut();
+              _logout();
+              //await _authService.signOut();
             },
           ),
         ],
@@ -103,6 +115,18 @@ class _HomeState extends State<Home> {
             ),
           ],
         )*/
+    );
+  }
+
+  void _logout() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('token');
+    localStorage.remove('user');
+    print('user: ${localStorage.get("user")}');
+    print('token: ${localStorage.get("token")}');
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => SignIn()),
     );
   }
 }
