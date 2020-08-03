@@ -1,11 +1,11 @@
 import 'dart:convert';
 
+import 'package:firebase_app/pages/auth/authenticate.dart';
 import 'package:firebase_app/pages/auth/sign_in.dart';
 import 'package:firebase_app/pages/home/home_demande.dart';
 import 'package:firebase_app/pages/home/home_offre.dart';
 import 'package:firebase_app/pages/home/map.dart';
 import 'package:firebase_app/pages/home/settings_form.dart';
-import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoder/geocoder.dart';
@@ -19,8 +19,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final AuthService _authService = new AuthService();
-
   int _selectedItem = 0;
   String username = '';
 
@@ -137,7 +135,7 @@ class _HomeState extends State<Home> {
     print('token: ${localStorage.get("token")}');
     Navigator.push(
       context,
-      new MaterialPageRoute(builder: (context) => SignIn()),
+      new MaterialPageRoute(builder: (context) => Authenticate()),
     );
   }
 }

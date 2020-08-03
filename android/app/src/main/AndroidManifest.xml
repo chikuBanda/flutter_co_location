@@ -11,6 +11,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="firebase_app"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- TODO: Add your API key here -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAwATLyvkj5LrybplkB0H-UrNt1GtkDg5Q"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:firebase_app/pages/home/home.dart';
 import 'package:firebase_app/services/authentication.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_app/services/auth.dart';
 import 'package:firebase_app/shared/constants.dart';
 import 'package:firebase_app/shared/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +17,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _authService = new AuthService();
   final formKey = GlobalKey<FormState>();
   bool loading = false;
 

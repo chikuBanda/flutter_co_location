@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_app/shared/constants.dart';
 import 'package:firebase_app/shared/loading.dart';
@@ -10,9 +8,6 @@ class AddDemande extends StatefulWidget {
 }
 
 class _AddDemandeState extends State<AddDemande> {
-  final AuthService _authService = new AuthService();
-  final CollectionReference demandeCollection =
-      Firestore.instance.collection('demandes');
   final formKey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -91,11 +86,6 @@ class _AddDemandeState extends State<AddDemande> {
                         //     });
                         //   }
                         // }
-                        demandeCollection.document().setData({
-                          'numero_tel': numero_tel,
-                          'budget_max': budget_max,
-                          'commentaire': commentaire
-                        });
 
                         Navigator.pop(context);
                       },

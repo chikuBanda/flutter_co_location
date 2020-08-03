@@ -19,18 +19,32 @@ class DetailOffre extends StatelessWidget {
           Container(
             child: Center(
               child: Image.network(
-                'https://picsum.photos/250?image=9',
+                'https://i.picsum.photos/id/1059/7360/4912.jpg?hmac=vVWk1qyiXN_VgPhpNqFm3yl2HUPW6fHqYOjTHYO2bHQ',
                 width: 500.0,
                 height: 300.0,
               ),
             ),
             padding: EdgeInsets.symmetric(vertical: 0.0),
           ),
+          SizedBox(height: 5.0),
+          Container(
+            width: 500.0,
+            child: Center(
+              child: Text(
+                offre.adresse,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 0.0),
+          ),
+          SizedBox(height: 20.0),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Card(
               child: Container(
-                height: 70,
+                height: 80,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -47,15 +61,8 @@ class DetailOffre extends StatelessWidget {
                               fontSize: 12,
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(width: 5.0),
-                      Column(
-                        children: [
-                          Text('Capacite'),
-                          SizedBox(height: 20.0),
                           Text(
-                            '${offre.capacite.toString()} personne(s)',
+                            'dh',
                             style: TextStyle(
                               color: Colors.blue,
                               fontSize: 12,
@@ -63,13 +70,41 @@ class DetailOffre extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(width: 5.0),
+                      SizedBox(width: 30.0),
+                      Column(
+                        children: [
+                          Text('Capacite'),
+                          SizedBox(height: 20.0),
+                          Text(
+                            '${offre.capacite.toString()}',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 12,
+                            ),
+                          ),
+                          Text(
+                            'personne(s)',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 30.0),
                       Column(
                         children: [
                           Text('Superficie'),
                           SizedBox(height: 20.0),
                           Text(
-                            '${offre.superficie.toString()} m',
+                            '${offre.superficie.toString()}',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 12,
+                            ),
+                          ),
+                          Text(
+                            'm\u00B2',
                             style: TextStyle(
                               color: Colors.blue,
                               fontSize: 12,

@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/cordinate.dart';
 import 'package:firebase_app/pages/home/map.dart';
 import 'package:firebase_app/pages/home/map_dialog.dart';
-import 'package:firebase_app/services/auth.dart';
+import 'package:firebase_app/services/offres_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_app/shared/constants.dart';
 import 'package:firebase_app/shared/loading.dart';
@@ -13,9 +12,8 @@ class AddOffre extends StatefulWidget {
 }
 
 class _AddOffreState extends State<AddOffre> {
-  final AuthService _authService = new AuthService();
-  final CollectionReference offresCollection =
-      Firestore.instance.collection('offres');
+  final OffreService offreService = new OffreService();
+
   final formKey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -24,6 +22,11 @@ class _AddOffreState extends State<AddOffre> {
   double superficie;
   int capacite;
   String adresse = '';
+  double cordx;
+  double cordy;
+  bool wifi = false;
+  bool climatisation = false;
+  bool lavage_ligne = false;
   String error = '';
 
   @override
@@ -90,6 +93,63 @@ class _AddOffreState extends State<AddOffre> {
                             : null,*/
                       ),
                       SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'cordx'),
+                        onChanged: (val) {
+                          setState(() => cordx = double.parse(val));
+                        },
+                        /*validator: (val) => val.length < 6
+                            ? 'Enter a password 6+ characters'
+                            : null,*/
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'cordy'),
+                        onChanged: (val) {
+                          setState(() => cordy = double.parse(val));
+                        },
+                        /*validator: (val) => val.length < 6
+                            ? 'Enter a password 6+ characters'
+                            : null,*/
+                      ),
+                      SizedBox(height: 20.0),
+                      CheckboxListTile(
+                        title: Text("Wifi"),
+                        value: wifi,
+                        onChanged: (newValue) {
+                          setState(() {
+                            wifi = newValue;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity
+                            .leading, //  <-- leading Checkbox
+                      ),
+                      SizedBox(height: 20.0),
+                      CheckboxListTile(
+                        title: Text("Lavage ligne"),
+                        value: lavage_ligne,
+                        onChanged: (newValue) {
+                          setState(() {
+                            lavage_ligne = newValue;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity
+                            .leading, //  <-- leading Checkbox
+                      ),
+                      SizedBox(height: 20.0),
+                      CheckboxListTile(
+                        title: Text("Climatisation"),
+                        value: climatisation,
+                        onChanged: (newValue) {
+                          setState(() {
+                            climatisation = newValue;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity
+                            .leading, //  <-- leading Checkbox
+                      ),
                       RaisedButton.icon(
                         onPressed: () {
                           openDialog();
@@ -116,12 +176,25 @@ class _AddOffreState extends State<AddOffre> {
                           //     });
                           //   }
                           // }
-                          offresCollection.document().setData({
+                          /*offresCollection.document().setData({
                             'prix': prix,
                             'adresse': adresse,
                             'capacite': capacite,
                             'superficie': superficie
-                          });
+                          });*/
+
+                          offreService.createOffre(
+                            prix: prix,
+                            adresse: adresse,
+                            capacite: capacite,
+                            superficie: superficie,
+                            wifi: wifi,
+                            lavage_ligne: lavage_ligne,
+                            climatisation: climatisation,
+                            cordx: cordx,
+                            cordy: cordy,
+                            user_id: 2,
+                          );
 
                           Navigator.pop(context);
                         },

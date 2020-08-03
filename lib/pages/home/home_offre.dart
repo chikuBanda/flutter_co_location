@@ -1,17 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/offre.dart';
 import 'package:firebase_app/pages/home/add_offre.dart';
 import 'package:firebase_app/pages/home/offre_details.dart';
-import 'package:firebase_app/services/auth.dart';
 import 'package:firebase_app/services/offres_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_app/pages/home/offre_description.dart';
 import 'package:firebase_app/pages/home/custom_list_item.dart';
 
 class HomeOffre extends StatelessWidget {
-  final AuthService _authService = new AuthService();
-  final CollectionReference offreCollection =
-      Firestore.instance.collection('offres');
   OffreService offreService = new OffreService();
 
   @override
@@ -62,7 +57,7 @@ class HomeOffre extends StatelessWidget {
       child: Container(
         child: CustomListItem(
           thumbnail: Image.network(
-            'https://picsum.photos/250?image=9',
+            'https://i.picsum.photos/id/1059/7360/4912.jpg?hmac=vVWk1qyiXN_VgPhpNqFm3yl2HUPW6fHqYOjTHYO2bHQ',
           ),
           adresse: record.adresse,
           capacite: record.capacite,
