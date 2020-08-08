@@ -1,16 +1,12 @@
 import 'dart:convert';
 
+import 'package:firebase_app/models/user.dart';
 import 'package:firebase_app/pages/auth/authenticate.dart';
-import 'package:firebase_app/pages/auth/sign_in.dart';
 import 'package:firebase_app/pages/home/home_demande.dart';
 import 'package:firebase_app/pages/home/home_offre.dart';
 import 'package:firebase_app/pages/home/map.dart';
-import 'package:firebase_app/pages/home/settings_form.dart';
+import 'package:firebase_app/services/user_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:geocoder/geocoder.dart';
-import "package:latlong/latlong.dart";
-import 'package:latlong/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -21,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedItem = 0;
   String username = '';
+  UserService userService = new UserService();
 
   @override
   void initState() {
@@ -29,12 +26,11 @@ class _HomeState extends State<Home> {
   }
 
   _loadUserData() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user'));
+    User user = await userService.getCurrentUser();
 
     if (user != null) {
       setState(() {
-        username = user;
+        username = user.name;
       });
     }
   }

@@ -135,7 +135,7 @@ class _RegisterState extends State<Register> {
     if (body['success']) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['data']['token']));
-      localStorage.setString('user', json.encode(body['data']['name']));
+      localStorage.setString('user', json.encode(body['data']['user']));
       Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => Home()),

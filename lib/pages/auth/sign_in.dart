@@ -119,7 +119,7 @@ class _SignInState extends State<SignIn> {
     if (body['success']) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['data']['token']));
-      localStorage.setString('user', json.encode(body['data']['name']));
+      localStorage.setString('user', json.encode(body['data']['user']));
 
       print(localStorage.get("user"));
       print(localStorage.get("token"));

@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:firebase_app/models/cordinate.dart';
-import 'package:firebase_app/pages/home/map.dart';
+import 'package:firebase_app/models/user.dart';
 import 'package:firebase_app/pages/home/map_dialog.dart';
 import 'package:firebase_app/services/offres_service.dart';
+import 'package:firebase_app/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_app/shared/constants.dart';
 import 'package:firebase_app/shared/loading.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:nominatim_location_picker/nominatim_location_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddOffre extends StatefulWidget {
   @override
@@ -28,6 +34,70 @@ class _AddOffreState extends State<AddOffre> {
   bool climatisation = false;
   bool lavage_ligne = false;
   String error = '';
+  int user_id;
+
+  UserService userService = new UserService();
+
+  @override
+  void initState() {
+    _loadUserData();
+    super.initState();
+  }
+
+  _loadUserData() async {
+    User user = await userService.getCurrentUser();
+
+    if (user != null) {
+      setState(() {
+        user_id = user.id;
+      });
+    }
+  }
+
+  Widget getLocationWithMapBox() {
+    return MapBoxLocationPicker(
+      popOnSelect: true,
+      apiKey:
+          "pk.eyJ1IjoiY2hpa3ViYW5kYSIsImEiOiJja2Jjc3lvMWMwNTQ5MnpsOXFlNDdxM3lhIn0.5xx4cVmEj0dUjqtEprnk1Q",
+      limit: 10,
+      language: 'pt',
+      country: 'br',
+      searchHint: 'Pesquisar',
+      awaitingForLocation: "Procurando por sua localização",
+      customMapLayer: TileLayerOptions(
+          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          subdomains: ['a', 'b', 'c']),
+      onSelected: (place) {
+        setState(() {
+          adresse = place.placeName;
+          cordx = place.geometry.coordinates[0];
+          cordy = place.geometry.coordinates[1];
+
+          print(adresse);
+          print(cordx);
+          print(cordy);
+        });
+      },
+      context: context,
+    );
+  }
+
+  RaisedButton mapBoxButton(Color color, String name) {
+    return RaisedButton(
+      color: color,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => getLocationWithMapBox()),
+        );
+      },
+      textColor: Colors.white,
+      child: Center(
+        child: Text(name),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +120,6 @@ class _AddOffreState extends State<AddOffre> {
                   padding: EdgeInsets.all(20.0),
                   child: ListView(
                     children: [
-                      SizedBox(height: 20.0),
-                      TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Adresse'),
-                        onChanged: (val) {
-                          setState(() => adresse = val);
-                        },
-                        //validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                      ),
                       SizedBox(height: 20.0),
                       TextFormField(
                         decoration:
@@ -92,28 +153,7 @@ class _AddOffreState extends State<AddOffre> {
                             ? 'Enter a password 6+ characters'
                             : null,*/
                       ),
-                      SizedBox(height: 20.0),
-                      TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'cordx'),
-                        onChanged: (val) {
-                          setState(() => cordx = double.parse(val));
-                        },
-                        /*validator: (val) => val.length < 6
-                            ? 'Enter a password 6+ characters'
-                            : null,*/
-                      ),
-                      SizedBox(height: 20.0),
-                      TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'cordy'),
-                        onChanged: (val) {
-                          setState(() => cordy = double.parse(val));
-                        },
-                        /*validator: (val) => val.length < 6
-                            ? 'Enter a password 6+ characters'
-                            : null,*/
-                      ),
+
                       SizedBox(height: 20.0),
                       CheckboxListTile(
                         title: Text("Wifi"),
@@ -150,13 +190,17 @@ class _AddOffreState extends State<AddOffre> {
                         controlAffinity: ListTileControlAffinity
                             .leading, //  <-- leading Checkbox
                       ),
-                      RaisedButton.icon(
+
+                      /*RaisedButton.icon(
                         onPressed: () {
                           openDialog();
                         },
                         icon: Icon(Icons.add_location),
                         label: Text('Ajouter adresse'),
-                      ),
+                      ),*/
+
+                      //nominatimButton(Colors.blue, 'location picker'),
+                      mapBoxButton(Colors.red, 'location picker'),
                       SizedBox(height: 20.0),
                       RaisedButton(
                         color: Colors.pink[400],
@@ -193,7 +237,7 @@ class _AddOffreState extends State<AddOffre> {
                             climatisation: climatisation,
                             cordx: cordx,
                             cordy: cordy,
-                            user_id: 2,
+                            user_id: user_id,
                           );
 
                           Navigator.pop(context);
